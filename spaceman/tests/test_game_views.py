@@ -37,7 +37,7 @@ class GameApiViewTests( TestCase ):
     def test_game_view_should_create_new_game_on_POST( self ):
         response = game_view( self.request_factory.post('dummy') )
 
-        self.assertEquals( response.status_code, 200)
+        self.assertEqual( response.status_code, 200)
         self.assertIsNotNone( response.data['id'] )
         self.assertTrue( response.data['id'] >= 0 )
 
@@ -52,8 +52,8 @@ class GameApiViewTests( TestCase ):
             response = game_view( mock_request, 25 )
             
             mock_get.assert_called_with( pk=25 )
-            self.assertEquals( response.status_code, 200 )
-            self.assertEquals( response.data['letters_guessed'], ['A','B'])
+            self.assertEqual( response.status_code, 200 )
+            self.assertEqual( response.data['letters_guessed'], ['A','B'])
 
     def test_game_view_should_reject_PUT_if_invalid( self ):
         with patch.object( Game.objects, 'get' ) as mock_get:
@@ -65,7 +65,7 @@ class GameApiViewTests( TestCase ):
             response = game_view( mock_request, 25 )
             
             mock_get.assert_called_with( pk=25 )
-            self.assertEquals( response.status_code, 400 )
+            self.assertEqual( response.status_code, 400 )
 
 
     ### GET solution view

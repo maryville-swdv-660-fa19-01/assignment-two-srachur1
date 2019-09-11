@@ -14,30 +14,30 @@ class GameSerializerTests( TestCase ):
     ### create
     def test_create_should_create_game_with_given_word( self ):
         game = GameSerializer().create( {'word': 'BALLOON'} )
-        self.assertEquals( game.word, 'BALLOON')
+        self.assertEqual( game.word, 'BALLOON')
 
     def test_create_should_pick_random_word_when_none_given( self ):
         with patch.object( RandomWord, 'getRandomWord' ) as mockGetRandomWord:
             mockGetRandomWord.return_value = 'TESTWORD'
 
             game = GameSerializer().create( {} )
-            self.assertEquals( game.word, 'TESTWORD')
+            self.assertEqual( game.word, 'TESTWORD')
 
     def test_create_should_uppercase_word( self ):
         game = GameSerializer().create( {'word': 'balloon'} )
-        self.assertEquals( game.word, 'BALLOON')
+        self.assertEqual( game.word, 'BALLOON')
 
         with patch.object( RandomWord, 'getRandomWord' ) as mockGetRandomWord:
             mockGetRandomWord.return_value = 'randomballoon'
 
             game = GameSerializer().create( {} )
-            self.assertEquals( game.word, 'RANDOMBALLOON')
+            self.assertEqual( game.word, 'RANDOMBALLOON')
 
     def test_create_should_init_guessed_word_state_to_be_empty_strings_for_each_word_char( self ):
         game = GameSerializer().create( {'word': 'BALLOON'} )
 
-        self.assertEquals( len(game.guessed_word_state), len('BALLOON'))
-        self.assertEquals( len( [c for c in game.guessed_word_state if c != ''] ), 0)
+        self.assertEqual( len(game.guessed_word_state), len('BALLOON'))
+        self.assertEqual( len( [c for c in game.guessed_word_state if c != ''] ), 0)
 
 
 
@@ -87,7 +87,7 @@ class GameSerializerTests( TestCase ):
         serializer = GameSerializer()
         serializer.instance = Mock( is_game_over = False, letters_available = ['A', 'B'] )
 
-        self.assertEquals(['B'], serializer.validate_letters_guessed(['B']))
+        self.assertEqual(['B'], serializer.validate_letters_guessed(['B']))
 
 
 
